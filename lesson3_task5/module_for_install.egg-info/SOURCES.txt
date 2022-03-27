@@ -1,0 +1,10 @@
+MANIFEST.in
+setup.py
+module_for_install/__init__.py
+module_for_install/decrement.py
+module_for_install/increment.py
+module_for_install/some_JSON_file.json
+module_for_install.egg-info/PKG-INFO
+module_for_install.egg-info/SOURCES.txt
+module_for_install.egg-info/dependency_links.txt
+module_for_install.egg-info/top_level.txt
