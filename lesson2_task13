@@ -1,0 +1,17 @@
+import os
+import graphviz
+
+directory_name = 'directory_one'
+tree = os.walk(directory_name)
+dot = graphviz.Digraph(directory_name)
+
+letter = 'B'
+print(tree)
+for el in tree:
+    for el_2 in el[1]:
+        dot.edge(el[0], el_2)
+    for el_2 in el[2]:
+        dot.edge(el[0], el_2)
+
+
+print(dot)
