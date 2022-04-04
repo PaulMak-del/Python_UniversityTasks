@@ -1,0 +1,99 @@
+class Num:
+
+    def __init__(self, num):
+        self.num = num
+
+    def __str__(self):
+        return str(self.num)
+
+    def __add__(self, obj):
+        result = self.num + obj.num
+        return result
+
+    def __mul__(self, obj):
+        result = self.num * obj.num
+        return result
+
+
+class Add:
+
+    def __init__(self, *argv):
+        self.lst = [el for el in argv]
+        self.result = 0
+
+    def __str__(self):
+        result = "(" + str(self.lst[0])
+        for el in self.lst[1:]:
+            result += " + " + str(el)
+        result += ")"
+        return result
+
+    def __add__(self, obj):
+        self.result = self.result + obj
+        return self.result
+
+    def calc(self):
+        result = 0
+        for el in self.lst:
+            result = result + el
+        return result
+
+
+class Mul:
+
+    def __init__(self, *argv):
+        self.lst = [el for el in argv]
+        self.result = 1
+
+    def __str__(self):
+        result = "(" + str(self.lst[0])
+        for el in self.lst[1:]:
+            result += " * " + str(el)
+        result += ")"
+        return result
+
+    def __mul__(self, obj):
+        self.result += obj
+        return self.result
+
+    def calc(self):
+        result = 1
+        for el in self.lst:
+            result *= el
+        return result
+
+
+class PrintVisitor:
+
+    def visit(self, obj):
+        return str(obj)
+
+
+class CalcVisitor:
+
+    def visit(self, obj):
+        return obj.calc()
+
+
+class StackVisitor:
+
+    def visit(self, obj):
+        pass
+
+    def get_code(self):
+        pass
+
+
+num_1 = Num(3)
+num_2 = Num(5)
+print(num_1 + num_2)
+add_1 = Add(num_1, num_2)
+
+ast = Add(Num(7), Mul(Num(3), Num(2)))
+pv = PrintVisitor()
+cv = CalcVisitor()
+# sv = StackVisitor()
+print(pv.visit(ast))
+print(cv.visit(ast))
+# sv.visit(ast)
+# print(sv.get_code())
