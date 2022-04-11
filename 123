@@ -1,0 +1,40 @@
+class HTML:
+    code = ''
+    def __init__(self):
+        code = ''
+
+    class body():
+
+        def __enter__(self):
+            print("<body>")
+
+        def __exit__(self, type, value, traceback):
+            print("</body>")
+            HTML.code += "</body>"
+
+    class div:
+
+        def __enter__(self):
+            print("<div>")
+
+        def __exit__(self, type, value, traceback):
+            print("</div>")
+
+    def p(self, str):
+        print(str)
+        self.code += str + '\n'
+
+    def get_code(self):
+        return self.code
+
+
+
+html = HTML()
+with html.body():
+    with html.div():
+        with html.div():
+            html.p('Первая строка.')
+            html.p('Вторая строка.')
+        with html.div():
+            html.p('Третья строка.')
+print(html.get_code())
