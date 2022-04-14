@@ -1,32 +1,27 @@
 class HTML:
     code = ''
-    def __init__(self):
-        code = ''
 
-    class body():
+    class body:
 
         def __enter__(self):
-            print("<body>")
+            HTML.code += "<body>\n"
 
         def __exit__(self, type, value, traceback):
-            print("</body>")
-            HTML.code += "</body>"
+            HTML.code += "</body>\n"
 
     class div:
 
         def __enter__(self):
-            print("<div>")
+            HTML.code += "<div>\n"
 
         def __exit__(self, type, value, traceback):
-            print("</div>")
+            HTML.code += "</div>\n"
 
     def p(self, str):
-        print(str)
-        self.code += str + '\n'
+        HTML.code += "<p>" + str + "</p>\n"
 
     def get_code(self):
-        return self.code
-
+        return HTML.code
 
 
 html = HTML()
@@ -37,4 +32,5 @@ with html.body():
             html.p('Вторая строка.')
         with html.div():
             html.p('Третья строка.')
+
 print(html.get_code())
