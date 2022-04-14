@@ -7,19 +7,23 @@ class Num:
         return str(self.num)
 
     def __add__(self, obj):
-        result = self.num + obj.num
-        return result
+        return self.num + obj.num
 
     def __mul__(self, obj):
-        result = self.num * obj.num
-        return result
+        return self.num * obj.num
+
+    def calc(self):
+        return self.num
+
+
+    def get_type(self):
+        return "PUSH " + str(self.num)
 
 
 class Add:
 
     def __init__(self, *argv):
         self.lst = [el for el in argv]
-        self.result = 0
 
     def __str__(self):
         result = "(" + str(self.lst[0])
@@ -29,14 +33,20 @@ class Add:
         return result
 
     def __add__(self, obj):
-        self.result = self.result + obj
-        return self.result
+        return self.calc()
+
+    def __mul__(self, obj):
+        return self.calc()
 
     def calc(self):
         result = 0
         for el in self.lst:
-            result = result + el
+            result += el.calc()
         return result
+
+
+    def get_type(self):
+        return "ADD"
 
 
 class Mul:
@@ -52,15 +62,21 @@ class Mul:
         result += ")"
         return result
 
+    def __add__(self, obj):
+        return self.calc()
+
     def __mul__(self, obj):
-        self.result += obj
-        return self.result
+        return self.calc()
 
     def calc(self):
         result = 1
         for el in self.lst:
-            result *= el
+            result *= el.calc()
         return result
+
+
+    def get_type(self):
+        return "MUL"
 
 
 class PrintVisitor:
@@ -77,23 +93,23 @@ class CalcVisitor:
 
 class StackVisitor:
 
+    def __init__(self):
+        self.code = ''
+
     def visit(self, obj):
-        pass
+        self.code += obj.get_type() + '\n'
+        for el in obj.lst:
+            self.code += el.get_type() + '\n'
 
     def get_code(self):
-        pass
+        return self.code
 
-
-num_1 = Num(3)
-num_2 = Num(5)
-print(num_1 + num_2)
-add_1 = Add(num_1, num_2)
 
 ast = Add(Num(7), Mul(Num(3), Num(2)))
 pv = PrintVisitor()
 cv = CalcVisitor()
-# sv = StackVisitor()
+sv = StackVisitor()
 print(pv.visit(ast))
 print(cv.visit(ast))
-# sv.visit(ast)
-# print(sv.get_code())
+sv.visit(ast)
+print(sv.get_code())
