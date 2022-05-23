@@ -15,9 +15,8 @@ class Num:
     def calc(self):
         return self.num
 
-
     def get_type(self):
-        return "PUSH " + str(self.num)
+        return "PUSH " + str(self.num) + "\n"
 
 
 class Add:
@@ -44,9 +43,11 @@ class Add:
             result += el.calc()
         return result
 
-
     def get_type(self):
-        return "ADD"
+        str = ''
+        for el in self.lst:
+            str += el.get_type()
+        return str + "ADD\n"
 
 
 class Mul:
@@ -74,9 +75,11 @@ class Mul:
             result *= el.calc()
         return result
 
-
     def get_type(self):
-        return "MUL"
+        str = ''
+        for el in self.lst:
+            str += el.get_type()
+        return str + "MULL\n"
 
 
 class PrintVisitor:
@@ -97,15 +100,15 @@ class StackVisitor:
         self.code = ''
 
     def visit(self, obj):
-        self.code += obj.get_type() + '\n'
-        for el in obj.lst:
-            self.code += el.get_type() + '\n'
+        self.code = obj.get_type()
+
 
     def get_code(self):
         return self.code
 
 
-ast = Add(Num(7), Mul(Num(3), Num(2)))
+ast = Mul(Add(Num(7), Mul(Num(3), Num(2))), Num(3))
+# ast = Mul(Num(7), Add(Num(8), Num(2)))
 pv = PrintVisitor()
 cv = CalcVisitor()
 sv = StackVisitor()
