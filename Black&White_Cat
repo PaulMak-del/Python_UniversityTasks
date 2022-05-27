@@ -1,0 +1,48 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as implt
+import numpy as np
+
+img = implt.imread('D:\\MIREA\\4_semester\\Python\\cat.jpg')
+
+arr = np.array(img)
+
+print(arr.shape)
+for x in range(arr.shape[0]):
+    for y in range(arr.shape[1]):
+        mean = arr[x][y][0] / 3 + arr[x][y][1] / 3 + arr[x][y][2] / 3
+        arr[x][y][0] = mean
+        arr[x][y][1] = mean
+        arr[x][y][2] = mean
+
+threshold = 128
+d2 = np.array([[0, 8, 2, 10], [12, 4, 14, 1], [3, 11, 1, 9], [15, 7, 13, 5]])
+n = 4
+for x in range(arr.shape[0]):
+    for y in range(arr.shape[1]):
+        mean = arr[x][y][0]
+        if mean < threshold:
+            error = mean
+            arr[x][y][0] = 0
+            arr[x][y][1] = 0
+            arr[x][y][2] = 0
+        else:
+            error = mean - 255
+            arr[x][y][0] = 255
+            arr[x][y][1] = 255
+            arr[x][y][2] = 255
+        if x < arr.shape[0] - 1 and arr.shape[1] - 1 > y >= 1:
+            arr[x][y + 1][0] += int((7 / 16.0) * error)
+            arr[x][y + 1][1] += int((7 / 16.0) * error)
+            arr[x][y + 1][2] += int((7 / 16.0) * error)
+            arr[x + 1][y + 1][0] += int((1 / 16.0) * error)
+            arr[x + 1][y + 1][1] += int((1 / 16.0) * error)
+            arr[x + 1][y + 1][2] += int((1 / 16.0) * error)
+            arr[x + 1][y][0] += int((5 / 16.0) * error)
+            arr[x + 1][y][1] += int((5 / 16.0) * error)
+            arr[x + 1][y][2] += int((5 / 16.0) * error)
+            arr[x + 1][y - 1][0] += int((3 / 16.0) * error)
+            arr[x + 1][y - 1][1] += int((3 / 16.0) * error)
+            arr[x + 1][y - 1][2] += int((3 / 16.0) * error)
+
+plt.imshow(arr)
+plt.show()
