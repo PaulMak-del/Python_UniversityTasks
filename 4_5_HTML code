@@ -1,3 +1,32 @@
+'''
+Язык HTML-тегов с помощью менеджера контекста.
+
+Реализовать классы для выполнения следующего примера:
+
+html = HTML()
+with html.body():
+    with html.div():
+        with html.div():
+            html.p('Первая строка.')
+            html.p('Вторая строка.')
+        with html.div():
+            html.p('Третья строка.')
+print(html.get_code())
+Результат:
+
+<body>
+<div>
+<div>
+<p>Первая строка.</p>
+<p>Вторая строка.</p>
+</div>
+<div>
+<p>Третья строка.</p>
+</div>
+</div>
+</body>
+'''
+
 class HTML:
     code = ''
 
