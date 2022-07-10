@@ -1,9 +1,13 @@
+'''
+Реализуйте алгоритм Флойда-Стейнберга с помощью NumPy.
+
+Старайтесь максимально использовать возможности NumPy.
+'''
 import matplotlib.pyplot as plt
-# import matplotlib.image as implt
 import numpy as np
 from PIL import Image
 
-img_name = 'C:\\Users\\ivcbibl13\\Downloads\\123.jpg'
+img_name = 'C:\\Users\\ivcbibl13\\Downloads\\123.jpg' # Cats picture
 img = Image.open(img_name)
 img = img.convert('L')
 
