@@ -1,3 +1,6 @@
+'''
+Задания с учебного сайта http://kispython.ru
+'''
 import struct
 
 
